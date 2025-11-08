@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
+     
     [SerializeField] private float maxHP;
     public float MaxHP => maxHP;
 
@@ -9,6 +11,8 @@ public class Enemy : MonoBehaviour
     public float CurrentHP => currentHP;
 
     [SerializeField] private float attackDamage;
+    [SerializeField] private float enemyAttackInterval = 2f;
+    private float attackTimer = 0f;
 
     public bool isDefeated;
 
@@ -20,13 +24,20 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        IsActive();
+    }
+
+    private void IsActive()
+    {
         if (currentHP <= 0 && !isDefeated)
         {
-            EnemyDefeated();
+            // ÇµÇÒÇ≈ÇÈ
+            EnemyDefeated(); // Ç±ÇÍÇÕàÍìxÇ´ÇËé¿çs
         }
         else
         {
-            EnemyAlive();
+            // Ç¢Ç´ÇƒÇÈ
+            Attack();
         }
     }
 
@@ -36,12 +47,17 @@ public class Enemy : MonoBehaviour
     {
         currentHP -= amount;
         if (currentHP <= 0) { currentHP = 0; };
-        Debug.Log($"Enemy HP : {currentHP}");
+        //Debug.Log($"Enemy HP : {currentHP}");
     }
 
-    public void EnemyAlive()
-    {
-        // çUåÇèàóùÇ∆Ç©
+    public void Attack()
+    {     
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= enemyAttackInterval)
+        {
+            attackTimer = 0f;
+            gameManager.EnemyAttack(attackDamage); // çUåÇ
+        }
     }
 
     public void EnemyDefeated()

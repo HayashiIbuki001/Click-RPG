@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Slider enemyHPBar;
     [SerializeField] private TextMeshProUGUI enemyHPText;
+    [SerializeField] private Slider playerHPBar;
+    [SerializeField] private TextMeshProUGUI playerHPText;
 
     private void Start()
     {
@@ -25,21 +27,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void EnemyAttack()
+    public void EnemyAttack(float damage)
     {
-
+        player.TakeDamage(damage);
+        UpdateUI();
     }
 
-    private void ReStart()
+    public void ReStart()
     {
-
+        
     }
 
     private void UpdateUI()
     {
-        float ratio = enemy.CurrentHP / enemy.MaxHP;
-        enemyHPBar.value = ratio;
-
+        float enemyRatio = enemy.CurrentHP / enemy.MaxHP;
+        enemyHPBar.value = enemyRatio;
         enemyHPText.text = $"{Mathf.RoundToInt(enemy.CurrentHP)} / {Mathf.RoundToInt(enemy.MaxHP)}";
+
+        float playerRatio = player.CurrentHP / player.MaxHP;
+        playerHPBar.value = playerRatio;
+        playerHPText.text = $"{Mathf.RoundToInt(player.CurrentHP)} / {Mathf.RoundToInt(player.MaxHP)}";
     }
 }
