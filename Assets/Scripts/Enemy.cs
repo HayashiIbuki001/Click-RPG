@@ -3,6 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private Reward reward = new Reward(10);
      
     [SerializeField] private float maxHP;
     public float MaxHP => maxHP;
@@ -63,11 +64,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public Reward GetReward()
+    {
+        return reward;
+    }
+
     public void EnemyDefeated()
     {
         isDefeated = true;
 
-        
+        gameManager.AddReward(GetReward());
 
         gameManager.ReStart(false);
         Debug.Log("“G‚ð“|‚µ‚½");

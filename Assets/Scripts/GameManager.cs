@@ -8,18 +8,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Enemy enemy;
 
     [Header("PlayerStatus")]
-    [SerializeField] private int coins;
-    public int getCoins;
+    [SerializeField] private int coins = 0;
 
     [Header("UI")]
     [SerializeField] private Slider enemyHPBar;
     [SerializeField] private TextMeshProUGUI enemyHPText;
     [SerializeField] private Slider playerHPBar;
     [SerializeField] private TextMeshProUGUI playerHPText;
+    [SerializeField] private TextMeshProUGUI coinText;
 
     private void Start()
     {
         UpdateUI();
+        UpdateStatusUI();
     }
 
     public void PlayerAttack()
@@ -37,9 +38,12 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void PlayerStatus()
+    public void AddReward(Reward reward)
     {
+        coins += reward.coins;
+        Debug.Log($"åªç›èäéùÉRÉCÉìêî : {coins}");
 
+        UpdateStatusUI();
     }
 
     /// <summary>
@@ -71,5 +75,10 @@ public class GameManager : MonoBehaviour
         float playerRatio = player.CurrentHP / player.MaxHP;
         playerHPBar.value = playerRatio;
         playerHPText.text = $"{Mathf.RoundToInt(player.CurrentHP)} / {Mathf.RoundToInt(player.MaxHP)}";
+    }
+
+    private void UpdateStatusUI()
+    {
+        coinText.text = $"{coins}coin";
     }
 }
