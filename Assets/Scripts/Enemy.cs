@@ -29,12 +29,7 @@ public class Enemy : MonoBehaviour
 
     private void IsActive()
     {
-        if (currentHP <= 0 && !isDefeated)
-        {
-            // ‚µ‚ñ‚Å‚é
-            EnemyDefeated(); // ‚±‚ê‚Íˆê“x‚«‚èŽÀs
-        }
-        else
+        if (!isDefeated)
         {
             // ‚¢‚«‚Ä‚é
             Attack();
@@ -46,7 +41,15 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHP -= amount;
-        if (currentHP <= 0) { currentHP = 0; };
+        if (currentHP <= 0) 
+        {
+            currentHP = 0;
+
+            if (!isDefeated)
+            {
+                EnemyDefeated();
+            }
+        };
         //Debug.Log($"Enemy HP : {currentHP}");
     }
 
@@ -63,6 +66,17 @@ public class Enemy : MonoBehaviour
     public void EnemyDefeated()
     {
         isDefeated = true;
+
+        
+
+        gameManager.ReStart(false);
         Debug.Log("“G‚ð“|‚µ‚½");
+    }
+
+    public void ResetStatus()
+    {
+        currentHP = MaxHP;
+        attackTimer = 0f;
+        isDefeated= false;
     }
 }

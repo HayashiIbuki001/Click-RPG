@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHP -= amount;
-        Debug.Log($"player HP : {currentHP}");
+        // Debug.Log($"player HP : {currentHP}");
 
         if (currentHP <= 0)
         {
@@ -32,11 +32,17 @@ public class Player : MonoBehaviour
 
     private void Defeat()
     {
-        gameManager.ReStart();
+        gameManager.ReStart(true);
+        Debug.Log("ƒvƒŒƒCƒ„[‚ª‚â‚ç‚ê‚½");
     }
 
     private void DamageAmount()
     {
 
+    }
+
+    public void ResetStatus()
+    {
+        currentHP = MaxHP;
     }
 }

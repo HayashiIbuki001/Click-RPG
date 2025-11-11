@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private Enemy enemy;
 
+    [Header("PlayerStatus")]
+    [SerializeField] private int coins;
+    public int getCoins;
+
     [Header("UI")]
     [SerializeField] private Slider enemyHPBar;
     [SerializeField] private TextMeshProUGUI enemyHPText;
@@ -33,9 +37,29 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void ReStart()
+    public void PlayerStatus()
     {
-        
+
+    }
+
+    /// <summary>
+    /// プレイヤーまたは敵がやられたらリスタートする
+    /// </summary>
+    /// <param name="playerDefeated">true : プレイヤーがやられる / false : 敵がやられる</param>
+    public void ReStart(bool playerDefeated)
+    {
+        player.ResetStatus();
+        enemy.ResetStatus();
+        UpdateUI();
+
+        if (playerDefeated)
+        {
+            // プレイヤー側がやられたときのみ実行する
+        }
+        else
+        {
+            // 敵側がやられたときのみ実行する
+        }
     }
 
     private void UpdateUI()
